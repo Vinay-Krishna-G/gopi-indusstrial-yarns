@@ -1,0 +1,73 @@
+/* ============================================
+   SPECTRUM
+   ============================================ */
+
+.spectrum {
+  padding: 6rem 0 5rem;
+  background: var(--color-bg-soft);
+  overflow: hidden;
+}
+
+.spectrum__header {
+  margin-bottom: 3rem;
+}
+
+.spectrum__header .eyebrow {
+  display: block;
+  margin-bottom: 0.875rem;
+}
+
+.spectrum__heading {
+  font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  line-height: 1.1;
+}
+
+.spectrum__image-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.spectrum__image-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+.spectrum__image {
+  display: block;
+  width: 100%;
+  min-width: 600px;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.spectrum__footer {
+  margin-top: 2.5rem;
+}
+
+.spectrum__copy {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  color: var(--color-muted);
+  line-height: 1.7;
+  max-width: 54ch;
+}
+
+@media (max-width: 768px) {
+  .spectrum {
+    padding: 4rem 0 3.5rem;
+  }
+
+  .spectrum__header {
+    margin-bottom: 2rem;
+  }
+
+  .spectrum__image {
+    min-width: 480px;
+  }
+}

@@ -1,0 +1,122 @@
+/* ============================================
+   FEATURES
+   ============================================ */
+
+.features {
+  padding: 6rem 0;
+  background: var(--color-bg);
+}
+
+.features__header {
+  margin-bottom: 3.5rem;
+}
+
+.features__header .eyebrow {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.features__heading {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+/* 4-column grid */
+.features__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.features__item {
+  padding: 2rem 2rem 2rem 0;
+  border-left: 1px solid var(--color-border);
+  padding-left: 2rem;
+}
+
+.features__item:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.features__icon {
+  color: var(--color-primary);
+  margin-bottom: 1.25rem;
+}
+
+.features__title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.features__desc {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-muted);
+  line-height: 1.65;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 900px) {
+  .features__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+  }
+
+  .features__item {
+    padding: 2rem;
+    border-left: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .features__item:first-child {
+    border-left: 1px solid var(--color-border);
+  }
+
+  .features__item:nth-child(odd) {
+    border-left: none;
+    padding-left: 0;
+  }
+
+  /* Remove bottom border from last row */
+  .features__item:nth-last-child(-n+2) {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .features {
+    padding: 4rem 0;
+  }
+
+  .features__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .features__item {
+    padding: 1.5rem 1rem 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .features__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .features__item {
+    border-left: none !important;
+    padding-left: 0 !important;
+    border-bottom: 1px solid var(--color-border);
+  }
+}

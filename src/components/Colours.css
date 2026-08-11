@@ -1,0 +1,124 @@
+/* ============================================
+   COLOURS
+   ============================================ */
+
+.colours {
+  padding: 6rem 0;
+  background: var(--color-bg-soft);
+}
+
+.colours__header {
+  margin-bottom: 2.5rem;
+}
+
+.colours__header .eyebrow {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.colours__heading {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+/* Swatches */
+.colours__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.colours__swatch {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.12);
+  flex-shrink: 0;
+}
+
+.colours__swatch:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.2), 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.colours__swatch:focus-visible {
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.3);
+}
+
+.colours__swatch--active {
+  border-color: var(--color-primary);
+  transform: scale(1.1);
+}
+
+/* Special treatment for white swatch */
+.colours__swatch[style*="FFFFFF"],
+.colours__swatch[title="White"] {
+  box-shadow: 0 0 0 1.5px #ccc;
+}
+
+/* Note */
+.colours__note {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-muted);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+/* CTA */
+.colours__cta {
+  display: flex;
+}
+
+.colours__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.9375rem 2rem;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.colours__btn:hover {
+  opacity: 0.82;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+  .colours {
+    padding: 4rem 0;
+  }
+
+  .colours__swatch {
+    width: 40px;
+    height: 40px;
+  }
+
+  .colours__swatches {
+    gap: 0.625rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .colours__swatch {
+    width: 36px;
+    height: 36px;
+  }
+}
