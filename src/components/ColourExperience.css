@@ -1,6 +1,46 @@
 /* ============================================
-   COLOUR EXPERIENCE  — Full rewrite
+   COLOUR EXPERIENCE — Premium Polish Pass
    ============================================ */
+
+/* ─── KEYFRAMES ─────────────────────────────────────────────── */
+
+/* Product entering: scale up + rise from slightly below */
+@keyframes yarnEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.965) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Product exiting: scale down + drift slightly upward */
+@keyframes yarnExit {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.965) translateY(-8px);
+  }
+}
+
+/* Section-entrance animation for metadata (first appear, with delay) */
+@keyframes metaEntrance {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Colour-switch animation for metadata (quicker, from above) */
+@keyframes metaSwitch {
+  from { opacity: 0; transform: translateY(-5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── SECTION ────────────────────────────────────────────────── */
 
 .ce {
   position: relative;
@@ -8,21 +48,21 @@
   min-height: 88vh;
   display: flex;
   align-items: center;
-  /* Background transitions via inline style */
-  transition: background-color 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 650ms cubic-bezier(0.4, 0, 0.2, 1);
   padding: 6rem 0 5rem;
 }
 
-/* ─── ATMOSPHERIC GLOW BLOBS ─── */
+/* ─── ATMOSPHERIC GLOW BLOBS ─────────────────────────────────── */
+
 .ce__glow {
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
-  transition: background-color 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 750ms cubic-bezier(0.4, 0, 0.2, 1);
   will-change: background-color;
 }
 
-/* Large primary glow — right side */
+/* Primary — fills the right zone */
 .ce__glow--1 {
   width: 58%;
   height: 100%;
@@ -30,30 +70,31 @@
   top: 50%;
   transform: translateY(-50%);
   filter: blur(90px);
-  opacity: 0.55;
+  opacity: 0.48;
 }
 
-/* Secondary glow — upper right */
+/* Secondary — upper corner accent */
 .ce__glow--2 {
   width: 36%;
   height: 60%;
   right: 8%;
   top: -5%;
   filter: blur(70px);
-  opacity: 0.35;
+  opacity: 0.28;
 }
 
-/* Accent glow — bottom left bleed */
+/* Tertiary — lower left bleed for warmth */
 .ce__glow--3 {
   width: 28%;
   height: 40%;
   left: -4%;
   bottom: -10%;
   filter: blur(80px);
-  opacity: 0.25;
+  opacity: 0.20;
 }
 
-/* ─── LAYOUT ─── */
+/* ─── LAYOUT ─────────────────────────────────────────────────── */
+
 .ce__inner {
   position: relative;
   z-index: 1;
@@ -64,38 +105,34 @@
   min-height: calc(88vh - 11rem);
 }
 
-/* ─── LEFT COLUMN ─── */
+/* ─── LEFT COLUMN ────────────────────────────────────────────── */
+
 .ce__left {
   display: flex;
   flex-direction: column;
-  gap: 0;
   padding-right: 3rem;
 }
 
-/* Section eyebrow */
+/* Staggered entrance animations via .ce--entered */
 .ce__eyebrow {
   margin-bottom: 2.5rem;
   opacity: 0;
   transform: translateY(10px);
   transition: opacity 0.7s ease 0.05s, transform 0.7s ease 0.05s;
 }
-
 .ce--entered .ce__eyebrow {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Large editorial product title */
 .ce__product-title {
   display: flex;
   flex-direction: column;
-  gap: 0;
   margin-bottom: 2rem;
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+  transition: opacity 0.7s ease 0.12s, transform 0.7s ease 0.12s;
 }
-
 .ce--entered .ce__product-title {
   opacity: 1;
   transform: translateY(0);
@@ -110,36 +147,20 @@
   color: var(--color-primary);
 }
 
-/* Selected colour meta (name + index) */
+/* ─── COLOUR META (name + index) ─────────────────────────────── */
+
 .ce__colour-meta {
   margin-bottom: 2.75rem;
-  opacity: 0;
-  transform: translateY(0);
-  transition: opacity 300ms ease, transform 300ms ease;
 }
 
-/* Section initial enter */
-.ce--entered .ce__colour-meta {
-  opacity: 1;
+/* Initial entrance: plays once when section enters, with a delay */
+.ce__colour-meta--initial {
+  animation: metaEntrance 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.28s both;
 }
 
-/* Exit animation when switching colours */
-.ce__colour-meta--exit {
-  opacity: 0 !important;
-  transform: translateY(-8px) !important;
-  transition: opacity 300ms ease, transform 300ms ease;
-}
-
-/* Enter animation when new colour arrives */
-.ce__colour-meta--enter {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 300ms ease 30ms, transform 300ms ease 30ms;
-}
-
-/* Initially hide meta until section enters viewport */
-.ce:not(.ce--entered) .ce__colour-meta {
-  opacity: 0;
+/* Colour-switch: plays on every key change after first interaction */
+.ce__colour-meta--switch {
+  animation: metaSwitch 380ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
 .ce__colour-name {
@@ -160,24 +181,23 @@
   color: var(--color-muted);
 }
 
-/* ─── NAV STRIP ─── */
+/* ─── NAVIGATION ─────────────────────────────────────────────── */
+
 .ce__nav {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  /* 8 swatches: 4 per row at 38px each = 176px + gaps */
-  max-width: 256px;
+  max-width: 256px;           /* 4 per row at 38px + gaps */
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+  transition: opacity 0.7s ease 0.22s, transform 0.7s ease 0.22s;
 }
-
 .ce--entered .ce__nav {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Individual swatch button */
+/* Swatch button */
 .ce__swatch {
   width: 38px;
   height: 38px;
@@ -188,156 +208,185 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
   overflow: hidden;
-  background: rgba(0,0,0,0.04);
+  background: rgba(0, 0, 0, 0.04);
   flex-shrink: 0;
+  /* Resting state: quiet and muted */
+  opacity: 0.72;
+  transition:
+    transform 220ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity   220ms ease,
+    box-shadow 220ms ease;
 }
 
 .ce__swatch:hover {
-  transform: scale(1.15);
+  opacity: 1;
+  transform: scale(1.08);
 }
 
-/* Swatch — yarn photo thumbnail (all 8 swatches use images) */
 .ce__swatch-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   border-radius: 50%;
   display: block;
+  pointer-events: none;
 }
 
-/* Active swatch state: double ring */
+/* Active: thin elegant colour ring, no scale jump */
 .ce__swatch--active {
-  transform: scale(1.1);
-  box-shadow:
-    0 0 0 2px #fff,
-    0 0 0 4px var(--swatch-hex, #888),
-    0 3px 10px rgba(0,0,0,0.12);
-}
-
-.ce__swatch--active:hover {
-  transform: scale(1.1);
-}
-
-/* Composition images (black-yellow, red-yellow) — slightly wider */
-.ce__image--composition {
-  max-width: 560px;
-}
-
-/* ─── RIGHT COLUMN ─── */
-.ce__right {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.ce__stage {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 420px;
-}
-
-/* ─── YARN PHOTOGRAPH ─── */
-.ce__image {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.10)) drop-shadow(0 6px 20px rgba(0,0,0,0.07));
-  /* transition states */
-  opacity: 0;
-  transform: scale(0.96) translateY(8px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-
-.ce__image--enter {
   opacity: 1;
-  transform: scale(1) translateY(0);
+  transform: scale(1.05);
+  box-shadow:
+    0 0 0 2px   rgba(255, 255, 255, 0.92),
+    0 0 0 3.5px var(--swatch-hex, #888),
+    0 2px 10px  rgba(0, 0, 0, 0.11);
+}
+.ce__swatch--active:hover {
+  transform: scale(1.05); /* no additional scale on hover when active */
 }
 
-.ce__image--exit {
-  opacity: 0 !important;
-  transform: scale(0.97) translateY(-6px) !important;
-  transition: opacity 300ms ease, transform 300ms ease !important;
-}
+/* ─── RIGHT COLUMN ───────────────────────────────────────────── */
 
-/* Initial enter animation for the whole right side */
 .ce__right {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px;
+  /* Section entrance */
   opacity: 0;
   transform: translateX(20px);
   transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
 }
-
 .ce--entered .ce__right {
   opacity: 1;
   transform: translateX(0);
 }
 
-/* ─── PLACEHOLDER (no photo) ─── */
-.ce__placeholder {
+/* ─── STUDIO LIGHT ───────────────────────────────────────────── */
+/* Soft, blurry ellipse centred behind the yarn.
+   Feels like studio backlight rather than a gradient. */
+.ce__studio-light {
+  position: absolute;
+  width: 68%;
+  height: 68%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);   /* JS parallax overrides this */
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.88;
+  transition: background-color 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 0;
+  /* Separate parallax from JS — no CSS transition on transform */
+}
+
+/* ─── YARN PARALLAX WRAPPER ──────────────────────────────────── */
+/* JS sets transform directly; no CSS transition here (RAF handles smoothness) */
+.ce__yarn-parallax {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
-  opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 0.7s ease, transform 0.7s ease;
 }
 
-.ce__placeholder--enter,
-.ce__placeholder.ce__image--enter {
-  opacity: 1;
-  transform: scale(1);
+/* ─── IMAGE STACK (true cross-fade) ──────────────────────────── */
+/* CSS Grid stacking — both images occupy the same cell.
+   They animate independently. No layout shift. */
+.ce__image-stack {
+  display: grid;
+  grid-template-areas: 'img';
+  place-items: center;
+}
+.ce__image-stack > * {
+  grid-area: img;
 }
 
-.ce__placeholder-circle {
+/* Base image styles */
+.ce__image {
+  width: 100%;
+  max-width: 525px;    /* ~5% larger than before for more presence */
+  height: auto;
+  object-fit: contain;
   display: block;
-  width: 200px;
-  height: 200px;
+  /* Layered drop-shadow follows transparent cone shape (not a rectangle) */
+  filter:
+    drop-shadow(0 30px 52px rgba(0, 0, 0, 0.09))
+    drop-shadow(0  6px 18px rgba(0, 0, 0, 0.05));
+}
+
+/* Initial state: no animation — product was already here */
+.ce__image--initial {
+  opacity: 1;
+  transform: none;
+  /* no animation */
+}
+
+/* Entering image (plays on key-mount when user switches colour) */
+.ce__image--entering {
+  animation: yarnEnter 620ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Exiting image (plays while old image is still in DOM) */
+.ce__image--exiting {
+  animation: yarnExit 560ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Composition shots (black-yellow, red-yellow) — slightly wider */
+.ce__image--composition {
+  max-width: 565px;
+}
+
+/* ─── COLOUR REFLECT ─────────────────────────────────────────── */
+/* Extremely subtle coloured glow below the cone base —
+   feels like a warm colour cast on the surface below. */
+.ce__reflect {
+  width: 32%;
+  height: 10px;
   border-radius: 50%;
-  opacity: 0.85;
+  filter: blur(12px);
+  opacity: 0.45;
+  transition: background-color 650ms ease;
+  pointer-events: none;
+  margin-top: 8px;
+  flex-shrink: 0;
 }
 
-.ce__placeholder-label {
-  font-size: 1.125rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--color-primary);
-}
+/* ─── REDUCED MOTION ─────────────────────────────────────────── */
 
-.ce__placeholder-sub {
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  opacity: 0.6;
-}
-
-/* ─── REDUCED MOTION ─── */
 @media (prefers-reduced-motion: reduce) {
   .ce,
   .ce__glow,
-  .ce__image,
-  .ce__placeholder,
-  .ce__colour-meta,
+  .ce__studio-light,
+  .ce__reflect,
   .ce__eyebrow,
   .ce__product-title,
   .ce__nav,
-  .ce__right {
+  .ce__right,
+  .ce__swatch {
     transition: none !important;
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .ce__image--entering,
+  .ce__image--exiting,
+  .ce__colour-meta--initial,
+  .ce__colour-meta--switch {
+    animation: none !important;
     opacity: 1 !important;
     transform: none !important;
   }
 }
 
-/* ─── RESPONSIVE ─── */
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+
 @media (max-width: 960px) {
   .ce {
     min-height: auto;
@@ -353,30 +402,34 @@
   .ce__left {
     padding-right: 0;
     order: 2;
-    align-items: flex-start;
   }
 
+  /* On mobile: image above text. Entrance is opacity only (no translateX). */
   .ce__right {
     order: 1;
-    transform: none !important;
+    min-height: 320px;
+    transform: translateY(-12px); /* gentle vertical entrance on mobile */
   }
-
   .ce--entered .ce__right {
-    transform: none;
+    transform: translateY(0);
   }
 
   .ce__product-title span {
     font-size: clamp(1.75rem, 8vw, 2.75rem);
   }
 
-  .ce__stage {
-    min-height: 300px;
-  }
-
   .ce__image {
-    max-width: 340px;
+    max-width: 320px;
+  }
+  .ce__image--composition {
+    max-width: 360px;
   }
 
+  .ce__nav {
+    max-width: 100%;
+  }
+
+  /* Reposition main glow blob for stacked layout */
   .ce__glow--1 {
     width: 80%;
     height: 50%;
@@ -384,16 +437,10 @@
     top: 5%;
     transform: translateX(50%);
   }
-
   .ce__glow--2 {
     width: 50%;
-    height: 35%;
     right: 5%;
     top: 0;
-  }
-
-  .ce__nav {
-    max-width: 100%;
   }
 }
 
@@ -403,16 +450,18 @@
   }
 
   .ce__image {
-    max-width: 280px;
+    max-width: 260px;
   }
-
-  .ce__placeholder-circle {
-    width: 150px;
-    height: 150px;
+  .ce__image--composition {
+    max-width: 300px;
   }
 
   .ce__swatch {
-    width: 22px;
-    height: 22px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .ce__right {
+    min-height: 280px;
   }
 }
