@@ -1,4 +1,5 @@
 import { useFadeIn } from '../hooks/useFadeIn';
+import { cloudinaryImage } from '../utils/cloudinary';
 import './Spectrum.css';
 
 export default function Spectrum() {
@@ -13,7 +14,13 @@ export default function Spectrum() {
 
       <div className="spectrum__image-wrap fade-in">
         <img
-          src="/images/yarns/spectrum.png"
+          src={cloudinaryImage('yarns/spectrum', '/images/yarns/spectrum.png', 1600)}
+          srcSet={`
+            ${cloudinaryImage('yarns/spectrum', '/images/yarns/spectrum.png', 800)} 800w,
+            ${cloudinaryImage('yarns/spectrum', '/images/yarns/spectrum.png', 1200)} 1200w,
+            ${cloudinaryImage('yarns/spectrum', '/images/yarns/spectrum.png', 1800)} 1800w
+          `}
+          sizes="100vw"
           alt="Full colour spectrum of Y-Cone polyester yarns arranged in rainbow order"
           className="spectrum__image"
           loading="lazy"

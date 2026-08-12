@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { openWhatsApp, whatsappMessages } from '../utils/whatsapp';
+import { cloudinaryImage } from '../utils/cloudinary';
 import './ColourExperience.css';
 
 interface YarnEntry {
@@ -10,6 +11,7 @@ interface YarnEntry {
   atmosphereBg: string;
   glowColor: string;
   studioLight: string;   // rgba — very subtle, behind yarn
+  publicId: string;
   image: string;
   isComposition?: boolean;
 }
@@ -20,50 +22,50 @@ const YARN_ENTRIES: YarnEntry[] = [
     id: 'green', label: 'Green', index: '01 / 08',
     swatchHex: '#3BA84E', atmosphereBg: '#EEF8EF', glowColor: '#A0D8A8',
     studioLight: 'rgba(70, 170, 90, 0.22)',
-    image: '/images/yarns/transparent/green.png',
+    publicId: 'yarns/transparent/green', image: '/images/yarns/transparent/green.png',
   },
   {
     id: 'blue', label: 'Blue', index: '02 / 08',
     swatchHex: '#1A4FBF', atmosphereBg: '#F0F4FF', glowColor: '#A8C0F8',
     studioLight: 'rgba(50, 110, 230, 0.18)',
-    image: '/images/yarns/transparent/blue.png',
+    publicId: 'yarns/transparent/blue', image: '/images/yarns/transparent/blue.png',
   },
   {
     id: 'white', label: 'White', index: '03 / 08',
     swatchHex: '#C8C5BF', atmosphereBg: '#F8F7F5', glowColor: '#D8D5CE',
     studioLight: 'rgba(160, 160, 165, 0.14)',
-    image: '/images/yarns/transparent/white.png',
+    publicId: 'yarns/transparent/white', image: '/images/yarns/transparent/white.png',
   },
   {
     id: 'red', label: 'Red', index: '04 / 08',
     swatchHex: '#D42B2B', atmosphereBg: '#FFF0F0', glowColor: '#F5AAAA',
     studioLight: 'rgba(210, 70, 70, 0.20)',
-    image: '/images/yarns/transparent/red.png',
+    publicId: 'yarns/transparent/red', image: '/images/yarns/transparent/red.png',
   },
   {
     id: 'orange', label: 'Orange', index: '05 / 08',
     swatchHex: '#E8621A', atmosphereBg: '#FFF2EA', glowColor: '#F8C090',
     studioLight: 'rgba(235, 130, 50, 0.22)',
-    image: '/images/yarns/transparent/orange.png',
+    publicId: 'yarns/transparent/orange', image: '/images/yarns/transparent/orange.png',
   },
   {
     id: 'yellow', label: 'Yellow', index: '06 / 08',
     swatchHex: '#E8C800', atmosphereBg: '#FDFAE0', glowColor: '#F0DC6E',
     studioLight: 'rgba(230, 200, 30, 0.18)',
-    image: '/images/yarns/transparent/yellow.png',
+    publicId: 'yarns/transparent/yellow', image: '/images/yarns/transparent/yellow.png',
   },
   {
     id: 'black-yellow', label: 'Black + Yellow', index: '07 / 08',
     swatchHex: '#2A2A2A', atmosphereBg: '#F5F3EC', glowColor: '#D4C870',
     studioLight: 'rgba(195, 165, 40, 0.18)',
-    image: '/images/yarns/transparent/black-yellow.png',
+    publicId: 'yarns/transparent/black-yellow', image: '/images/yarns/transparent/black-yellow.png',
     isComposition: true,
   },
   {
     id: 'red-yellow', label: 'Red + Yellow', index: '08 / 08',
     swatchHex: '#CC3A1A', atmosphereBg: '#FFF4EC', glowColor: '#F0B888',
     studioLight: 'rgba(230, 120, 60, 0.20)',
-    image: '/images/yarns/transparent/red-yellow.png',
+    publicId: 'yarns/transparent/red-yellow', image: '/images/yarns/transparent/red-yellow.png',
     isComposition: true,
   },
 ];
@@ -259,7 +261,7 @@ export default function ColourExperience() {
                 style={{ '--swatch-hex': entry.swatchHex } as React.CSSProperties}
               >
                 <img
-                  src={entry.image}
+                  src={cloudinaryImage(entry.publicId, entry.image, 160)}
                   alt={entry.label}
                   className="ce__swatch-img"
                   loading="lazy"
@@ -307,7 +309,13 @@ export default function ColourExperience() {
               {prevIdx !== null && (
                 <img
                   key={`exit-${YARN_ENTRIES[prevIdx].id}`}
-                  src={YARN_ENTRIES[prevIdx].image}
+                  src={cloudinaryImage(YARN_ENTRIES[prevIdx].publicId, YARN_ENTRIES[prevIdx].image, 800)}
+                  srcSet={`
+                    ${cloudinaryImage(YARN_ENTRIES[prevIdx].publicId, YARN_ENTRIES[prevIdx].image, 500)} 500w,
+                    ${cloudinaryImage(YARN_ENTRIES[prevIdx].publicId, YARN_ENTRIES[prevIdx].image, 800)} 800w,
+                    ${cloudinaryImage(YARN_ENTRIES[prevIdx].publicId, YARN_ENTRIES[prevIdx].image, 1000)} 1000w
+                  `}
+                  sizes="(max-width: 600px) 300px, (max-width: 960px) 360px, 565px"
                   alt=""
                   aria-hidden="true"
                   className={`ce__image ce__image--exiting${YARN_ENTRIES[prevIdx].isComposition ? ' ce__image--composition' : ''}`}
@@ -318,7 +326,13 @@ export default function ColourExperience() {
               {/* Current image — enters or is already visible */}
               <img
                 key={`enter-${active.id}`}
-                src={active.image}
+                src={cloudinaryImage(active.publicId, active.image, 800)}
+                srcSet={`
+                  ${cloudinaryImage(active.publicId, active.image, 500)} 500w,
+                  ${cloudinaryImage(active.publicId, active.image, 800)} 800w,
+                  ${cloudinaryImage(active.publicId, active.image, 1000)} 1000w
+                `}
+                sizes="(max-width: 600px) 300px, (max-width: 960px) 360px, 565px"
                 alt={`${active.label} Y-Cone Polyester Yarn`}
                 className={`ce__image${active.isComposition ? ' ce__image--composition' : ''}${isInteracted ? ' ce__image--entering' : ' ce__image--initial'}`}
                 loading={activeIdx === DEFAULT_IDX ? 'eager' : 'lazy'}

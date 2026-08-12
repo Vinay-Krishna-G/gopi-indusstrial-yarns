@@ -1,5 +1,6 @@
 import { useFadeIn } from '../hooks/useFadeIn';
 import { openWhatsApp, whatsappMessages } from '../utils/whatsapp';
+import { cloudinaryImage } from '../utils/cloudinary';
 import './Hero.css';
 
 export default function Hero() {
@@ -75,7 +76,13 @@ export default function Hero() {
         {/* RIGHT — Product image */}
         <div className="hero__image-wrap fade-in">
           <img
-            src="/images/yarns/orange.png"
+            src={cloudinaryImage('yarns/orange', '/images/yarns/orange.png', 800)}
+            srcSet={`
+              ${cloudinaryImage('yarns/orange', '/images/yarns/orange.png', 500)} 500w,
+              ${cloudinaryImage('yarns/orange', '/images/yarns/orange.png', 800)} 800w,
+              ${cloudinaryImage('yarns/orange', '/images/yarns/orange.png', 1000)} 1000w
+            `}
+            sizes="(max-width: 480px) 260px, (max-width: 900px) 320px, 540px"
             alt="Premium Y-Cone Polyester Yarn — Orange"
             className="hero__image"
             loading="eager"

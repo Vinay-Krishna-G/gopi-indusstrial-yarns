@@ -1,4 +1,5 @@
 import { useFadeIn } from '../hooks/useFadeIn';
+import { cloudinaryImage } from '../utils/cloudinary';
 import './MacroStory.css';
 
 export default function MacroStory() {
@@ -9,7 +10,13 @@ export default function MacroStory() {
       <div className="macro-story__inner">
         <div className="macro-story__image-wrap fade-in">
           <img
-            src="/images/yarns/macro.png"
+            src={cloudinaryImage('yarns/macro', '/images/yarns/macro.png', 1000)}
+            srcSet={`
+              ${cloudinaryImage('yarns/macro', '/images/yarns/macro.png', 600)} 600w,
+              ${cloudinaryImage('yarns/macro', '/images/yarns/macro.png', 1000)} 1000w,
+              ${cloudinaryImage('yarns/macro', '/images/yarns/macro.png', 1400)} 1400w
+            `}
+            sizes="(max-width: 900px) 100vw, 50vw"
             alt="Close-up macro texture of premium polyester yarn — showing fibre quality and sheen"
             className="macro-story__image"
             loading="lazy"
