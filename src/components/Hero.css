@@ -42,6 +42,12 @@
   margin-bottom: 1.5rem;
 }
 
+.hero__heading-part1,
+.hero__heading-part2,
+.hero__heading-part3 {
+  display: block;
+}
+
 .hero__subheading {
   font-size: 1.0625rem;
   font-weight: 400;
@@ -181,8 +187,26 @@
     align-self: flex-start;
   }
 
-  .hero__text .eyebrow { order: 1; }
-  .hero__heading { order: 2; margin-bottom: 2rem; }
+  .hero__text .eyebrow { 
+    order: 1; 
+    align-self: center; 
+  }
+  
+  .hero__heading { 
+    order: 2; 
+    margin-bottom: 2rem; 
+    align-self: center; 
+    text-align: center;
+  }
+  
+  .hero__heading-part1,
+  .hero__heading-part2 {
+    display: inline;
+  }
+  
+  .hero__heading-part3 {
+    display: block;
+  }
   
   .hero__image-wrap { 
     order: 3; 
@@ -197,7 +221,7 @@
   .hero__cta { order: 7; }
 
   .hero__heading {
-    font-size: clamp(2.25rem, 9vw, 3.5rem);
+    font-size: clamp(1.75rem, 8vw, 3.25rem);
   }
 
   .hero__image {

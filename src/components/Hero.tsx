@@ -13,9 +13,9 @@ export default function Hero() {
           <span className="eyebrow fade-in">Premium</span>
 
           <h1 className="hero__heading fade-in">
-            Y-Cone<br />
-            Polyester<br />
-            Yarns
+            <span className="hero__heading-part1">Y-Cone </span>
+            <span className="hero__heading-part2">Polyester</span>
+            <span className="hero__heading-part3">Yarns</span>
           </h1>
 
           <p className="hero__subheading fade-in">Colour. Strength. Consistency.</p>
