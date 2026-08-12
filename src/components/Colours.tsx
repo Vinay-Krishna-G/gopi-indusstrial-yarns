@@ -10,9 +10,7 @@ export default function Colours() {
 
   const handleSwatchClick = (colour: typeof colourSwatches[0]) => {
     setActiveColour(colour.name);
-    const message = `Hello! I'm interested in ${colour.name} Y-Cone Polyester Yarn. Please share details about availability and pricing.`;
-    const url = `https://wa.me/919999999999?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+    openWhatsApp(whatsappMessages.colour(colour.name));
   };
 
   return (
