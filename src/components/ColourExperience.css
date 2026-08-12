@@ -246,6 +246,41 @@
   transform: scale(1.05); /* no additional scale on hover when active */
 }
 
+/* ─── CTA ────────────────────────────────────────────────────── */
+
+.ce__cta {
+  margin-top: 2.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.7s ease 0.3s, transform 0.7s ease 0.3s;
+}
+.ce--entered .ce__cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ce__btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background: var(--color-primary);
+  color: #fff;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+.ce__btn-primary:hover {
+  opacity: 0.82;
+}
+
 /* ─── RIGHT COLUMN ───────────────────────────────────────────── */
 
 .ce__right {
@@ -439,6 +474,11 @@
   .ce__nav {
     order: 5;
     max-width: 100%;
+  }
+
+  /* 6. CTA */
+  .ce__cta {
+    order: 6;
   }
 
   .ce__product-title span {

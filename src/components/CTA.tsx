@@ -1,5 +1,5 @@
 import { useFadeIn } from '../hooks/useFadeIn';
-import { WHATSAPP_URL } from '../data/constants';
+import { openWhatsApp, whatsappMessages } from '../utils/whatsapp';
 import './CTA.css';
 
 export default function CTA() {
@@ -22,9 +22,8 @@ export default function CTA() {
 
           <div className="cta-section__actions fade-in">
             <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#"
+              onClick={(e) => { e.preventDefault(); openWhatsApp(whatsappMessages.cta); }}
               className="cta-section__btn"
               id="cta-whatsapp-btn"
             >

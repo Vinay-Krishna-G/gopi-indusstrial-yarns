@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { openWhatsApp, whatsappMessages } from '../utils/whatsapp';
 import './ColourExperience.css';
 
 interface YarnEntry {
@@ -173,6 +174,35 @@ export default function ColourExperience() {
     targetMouse.current = { x: 0.5, y: 0.5 };
   }, []);
 
+  // ── Touch swiping ──────────────────────────────────────────────
+  const touchStartX = useRef<number | null>(null);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const currentX = e.targetTouches[0].clientX;
+    const diff = touchStartX.current - currentX;
+
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        // swipe left -> next colour
+        selectColour((activeIdx + 1) % YARN_ENTRIES.length);
+      } else {
+        // swipe right -> previous colour
+        selectColour((activeIdx - 1 + YARN_ENTRIES.length) % YARN_ENTRIES.length);
+      }
+      // reset so we only trigger one change per swipe
+      touchStartX.current = null;
+    }
+  }, [activeIdx, selectColour]);
+
+  const handleTouchEnd = useCallback(() => {
+    touchStartX.current = null;
+  }, []);
+
   return (
     <section
       id="colour-experience"
@@ -181,6 +211,9 @@ export default function ColourExperience() {
       style={{ backgroundColor: active.atmosphereBg }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Background atmospheric glow blobs */}
       <div className="ce__glow ce__glow--1" style={{ backgroundColor: active.glowColor }} aria-hidden="true" />
@@ -233,6 +266,20 @@ export default function ColourExperience() {
                 />
               </button>
             ))}
+          </div>
+
+          <div className="ce__cta">
+            <button
+              type="button"
+              onClick={() => openWhatsApp(whatsappMessages.colour(active.label))}
+              className="ce__btn-primary"
+              id="ce-whatsapp-btn"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+              </svg>
+              Enquire on WhatsApp
+            </button>
           </div>
         </div>
 

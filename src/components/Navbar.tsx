@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { WHATSAPP_URL, COMPANY_NAME } from '../data/constants';
+import { COMPANY_NAME } from '../data/constants';
+import { openWhatsApp, whatsappMessages } from '../utils/whatsapp';
 import './Navbar.css';
 
 const navLinks = [
@@ -58,15 +59,13 @@ export default function Navbar() {
         </nav>
 
         {/* Desktop CTA */}
-        <a
-          href={WHATSAPP_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => openWhatsApp(whatsappMessages.general)}
           className="navbar__cta"
           id="navbar-enquire-btn"
         >
           Enquire
-        </a>
+        </button>
 
         {/* Mobile hamburger */}
         <button
@@ -93,16 +92,13 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => { setMenuOpen(false); openWhatsApp(whatsappMessages.general); }}
             className="navbar__mobile-cta"
-            id="navbar-mobile-enquire-btn"
             tabIndex={menuOpen ? 0 : -1}
           >
             Enquire on WhatsApp
-          </a>
+          </button>
         </nav>
       </div>
     </header>

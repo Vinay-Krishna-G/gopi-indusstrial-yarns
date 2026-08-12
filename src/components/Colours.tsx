@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useFadeIn } from '../hooks/useFadeIn';
 import { colourSwatches } from '../data/colours';
-import { WHATSAPP_URL } from '../data/constants';
+import { openWhatsApp, whatsappMessages } from '../utils/whatsapp';
 import './Colours.css';
 
 export default function Colours() {
@@ -43,9 +43,8 @@ export default function Colours() {
 
         <div className="colours__cta fade-in">
           <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#"
+            onClick={(e) => { e.preventDefault(); openWhatsApp(whatsappMessages.general); }}
             className="colours__btn"
             id="colours-whatsapp-btn"
           >

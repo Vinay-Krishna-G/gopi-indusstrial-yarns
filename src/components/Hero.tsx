@@ -1,5 +1,5 @@
 import { useFadeIn } from '../hooks/useFadeIn';
-import { WHATSAPP_URL } from '../data/constants';
+import { openWhatsApp, whatsappMessages } from '../utils/whatsapp';
 import './Hero.css';
 
 export default function Hero() {
@@ -48,10 +48,9 @@ export default function Hero() {
           </div>
 
           <div className="hero__cta fade-in">
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              type="button"
+              onClick={() => openWhatsApp(whatsappMessages.general)}
               className="hero__btn-primary"
               id="hero-enquire-btn"
             >
@@ -59,7 +58,7 @@ export default function Hero() {
                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
               </svg>
               Enquire on WhatsApp
-            </a>
+            </button>
             <a
               href="#collection"
               className="hero__btn-secondary"

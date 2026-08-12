@@ -1,4 +1,5 @@
-import { WHATSAPP_URL, COMPANY_EMAIL } from '../data/constants';
+import { COMPANY_EMAIL } from '../data/constants';
+import { openWhatsApp, whatsappMessages } from '../utils/whatsapp';
 import './Footer.css';
 
 export default function Footer() {
@@ -26,7 +27,12 @@ export default function Footer() {
             <p className="footer__contact-label">Contact</p>
             <ul className="footer__contact-list">
               <li>
-                <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="footer__link" id="footer-whatsapp-link">
+                <a 
+                  href="#"
+                  onClick={(e) => { e.preventDefault(); openWhatsApp(whatsappMessages.general); }}
+                  className="footer__link" 
+                  id="footer-whatsapp-link"
+                >
                   WhatsApp Enquiry
                 </a>
               </li>
