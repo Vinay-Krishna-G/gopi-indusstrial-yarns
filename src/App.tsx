@@ -1,6 +1,7 @@
 import './index.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import ColourExperience from './components/ColourExperience';
 import Spectrum from './components/Spectrum';
 import Collection from './components/Collection';
 import MacroStory from './components/MacroStory';
@@ -15,6 +16,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
+        <ColourExperience />
         <Spectrum />
         <Collection />
         <MacroStory />

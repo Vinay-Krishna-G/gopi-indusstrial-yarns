@@ -1,0 +1,418 @@
+/* ============================================
+   COLOUR EXPERIENCE  — Full rewrite
+   ============================================ */
+
+.ce {
+  position: relative;
+  overflow: hidden;
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+  /* Background transitions via inline style */
+  transition: background-color 600ms cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 6rem 0 5rem;
+}
+
+/* ─── ATMOSPHERIC GLOW BLOBS ─── */
+.ce__glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transition: background-color 700ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: background-color;
+}
+
+/* Large primary glow — right side */
+.ce__glow--1 {
+  width: 58%;
+  height: 100%;
+  right: -8%;
+  top: 50%;
+  transform: translateY(-50%);
+  filter: blur(90px);
+  opacity: 0.55;
+}
+
+/* Secondary glow — upper right */
+.ce__glow--2 {
+  width: 36%;
+  height: 60%;
+  right: 8%;
+  top: -5%;
+  filter: blur(70px);
+  opacity: 0.35;
+}
+
+/* Accent glow — bottom left bleed */
+.ce__glow--3 {
+  width: 28%;
+  height: 40%;
+  left: -4%;
+  bottom: -10%;
+  filter: blur(80px);
+  opacity: 0.25;
+}
+
+/* ─── LAYOUT ─── */
+.ce__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 44% 56%;
+  align-items: center;
+  gap: 0;
+  min-height: calc(88vh - 11rem);
+}
+
+/* ─── LEFT COLUMN ─── */
+.ce__left {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-right: 3rem;
+}
+
+/* Section eyebrow */
+.ce__eyebrow {
+  margin-bottom: 2.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.7s ease 0.05s, transform 0.7s ease 0.05s;
+}
+
+.ce--entered .ce__eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Large editorial product title */
+.ce__product-title {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s;
+}
+
+.ce--entered .ce__product-title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.ce__product-title span {
+  font-size: clamp(2rem, 3.5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+/* Selected colour meta (name + index) */
+.ce__colour-meta {
+  margin-bottom: 2.75rem;
+  opacity: 0;
+  transform: translateY(0);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+/* Section initial enter */
+.ce--entered .ce__colour-meta {
+  opacity: 1;
+}
+
+/* Exit animation when switching colours */
+.ce__colour-meta--exit {
+  opacity: 0 !important;
+  transform: translateY(-8px) !important;
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+/* Enter animation when new colour arrives */
+.ce__colour-meta--enter {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease 30ms, transform 300ms ease 30ms;
+}
+
+/* Initially hide meta until section enters viewport */
+.ce:not(.ce--entered) .ce__colour-meta {
+  opacity: 0;
+}
+
+.ce__colour-name {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.ce__colour-index {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* ─── NAV STRIP ─── */
+.ce__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  /* 8 swatches: 4 per row at 38px each = 176px + gaps */
+  max-width: 256px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
+}
+
+.ce--entered .ce__nav {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Individual swatch button */
+.ce__swatch {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  overflow: hidden;
+  background: rgba(0,0,0,0.04);
+  flex-shrink: 0;
+}
+
+.ce__swatch:hover {
+  transform: scale(1.15);
+}
+
+/* Swatch — yarn photo thumbnail (all 8 swatches use images) */
+.ce__swatch-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+/* Active swatch state: double ring */
+.ce__swatch--active {
+  transform: scale(1.1);
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px var(--swatch-hex, #888),
+    0 3px 10px rgba(0,0,0,0.12);
+}
+
+.ce__swatch--active:hover {
+  transform: scale(1.1);
+}
+
+/* Composition images (black-yellow, red-yellow) — slightly wider */
+.ce__image--composition {
+  max-width: 560px;
+}
+
+/* ─── RIGHT COLUMN ─── */
+.ce__right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.ce__stage {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 420px;
+}
+
+/* ─── YARN PHOTOGRAPH ─── */
+.ce__image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.10)) drop-shadow(0 6px 20px rgba(0,0,0,0.07));
+  /* transition states */
+  opacity: 0;
+  transform: scale(0.96) translateY(8px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.ce__image--enter {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.ce__image--exit {
+  opacity: 0 !important;
+  transform: scale(0.97) translateY(-6px) !important;
+  transition: opacity 300ms ease, transform 300ms ease !important;
+}
+
+/* Initial enter animation for the whole right side */
+.ce__right {
+  opacity: 0;
+  transform: translateX(20px);
+  transition: opacity 0.8s ease 0.15s, transform 0.8s ease 0.15s;
+}
+
+.ce--entered .ce__right {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ─── PLACEHOLDER (no photo) ─── */
+.ce__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.ce__placeholder--enter,
+.ce__placeholder.ce__image--enter {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.ce__placeholder-circle {
+  display: block;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  opacity: 0.85;
+}
+
+.ce__placeholder-label {
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.ce__placeholder-sub {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  opacity: 0.6;
+}
+
+/* ─── REDUCED MOTION ─── */
+@media (prefers-reduced-motion: reduce) {
+  .ce,
+  .ce__glow,
+  .ce__image,
+  .ce__placeholder,
+  .ce__colour-meta,
+  .ce__eyebrow,
+  .ce__product-title,
+  .ce__nav,
+  .ce__right {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 960px) {
+  .ce {
+    min-height: auto;
+    padding: 5rem 0 5rem;
+  }
+
+  .ce__inner {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    gap: 3rem;
+  }
+
+  .ce__left {
+    padding-right: 0;
+    order: 2;
+    align-items: flex-start;
+  }
+
+  .ce__right {
+    order: 1;
+    transform: none !important;
+  }
+
+  .ce--entered .ce__right {
+    transform: none;
+  }
+
+  .ce__product-title span {
+    font-size: clamp(1.75rem, 8vw, 2.75rem);
+  }
+
+  .ce__stage {
+    min-height: 300px;
+  }
+
+  .ce__image {
+    max-width: 340px;
+  }
+
+  .ce__glow--1 {
+    width: 80%;
+    height: 50%;
+    right: 50%;
+    top: 5%;
+    transform: translateX(50%);
+  }
+
+  .ce__glow--2 {
+    width: 50%;
+    height: 35%;
+    right: 5%;
+    top: 0;
+  }
+
+  .ce__nav {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .ce {
+    padding: 4rem 0 4.5rem;
+  }
+
+  .ce__image {
+    max-width: 280px;
+  }
+
+  .ce__placeholder-circle {
+    width: 150px;
+    height: 150px;
+  }
+
+  .ce__swatch {
+    width: 22px;
+    height: 22px;
+  }
+}
