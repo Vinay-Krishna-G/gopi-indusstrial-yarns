@@ -394,24 +394,51 @@
   }
 
   .ce__inner {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     min-height: auto;
-    gap: 3rem;
+    gap: 0; /* managed by margins now */
   }
 
   .ce__left {
-    padding-right: 0;
-    order: 2;
+    display: contents;
   }
 
-  /* On mobile: image above text. Entrance is opacity only (no translateX). */
-  .ce__right {
+  /* 1. Y-CONE POLYESTER YARNS */
+  .ce__product-title {
     order: 1;
+    margin-bottom: 1rem;
+  }
+
+  /* 2. COLOUR EXPERIENCE */
+  .ce__eyebrow {
+    order: 2;
+    margin-bottom: 3.5rem;
+  }
+
+  /* 3. LARGE YARN IMAGE */
+  .ce__right {
+    order: 3;
+    width: 100%;
     min-height: 320px;
+    margin-bottom: 3.5rem;
     transform: translateY(-12px); /* gentle vertical entrance on mobile */
   }
   .ce--entered .ce__right {
     transform: translateY(0);
+  }
+
+  /* 4. GREEN 01/08 */
+  .ce__colour-meta {
+    order: 4;
+    margin-bottom: 2.5rem;
+  }
+
+  /* 5. SWATCHES */
+  .ce__nav {
+    order: 5;
+    max-width: 100%;
   }
 
   .ce__product-title span {
@@ -423,10 +450,6 @@
   }
   .ce__image--composition {
     max-width: 360px;
-  }
-
-  .ce__nav {
-    max-width: 100%;
   }
 
   /* Reposition main glow blob for stacked layout */

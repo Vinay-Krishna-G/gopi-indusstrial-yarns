@@ -165,21 +165,36 @@
 
 @media (max-width: 900px) {
   .hero__inner {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     min-height: auto;
     padding-top: 3rem;
     padding-bottom: 3rem;
-    gap: 2.5rem;
   }
 
   .hero__text {
-    padding-right: 0;
-    order: 1;
+    display: contents;
   }
 
-  .hero__image-wrap {
-    order: 2;
+  /* Force left alignment since it's now in a flex column */
+  .hero__inner > * {
+    align-self: flex-start;
   }
+
+  .hero__text .eyebrow { order: 1; }
+  .hero__heading { order: 2; margin-bottom: 2rem; }
+  
+  .hero__image-wrap { 
+    order: 3; 
+    align-self: center;
+    margin-bottom: 3rem;
+    width: 100%;
+  }
+
+  .hero__subheading { order: 4; }
+  .hero__description { order: 5; }
+  .hero__indicators { order: 6; }
+  .hero__cta { order: 7; }
 
   .hero__heading {
     font-size: clamp(2.25rem, 9vw, 3.5rem);
@@ -187,6 +202,7 @@
 
   .hero__image {
     max-width: 320px;
+    margin: 0 auto;
   }
 
   .hero__indicators {
