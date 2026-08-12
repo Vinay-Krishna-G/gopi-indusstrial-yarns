@@ -70,7 +70,7 @@ const YARN_ENTRIES: YarnEntry[] = [
   },
 ];
 
-const DEFAULT_IDX = 4; // Orange
+const DEFAULT_IDX = 0; // Green
 const EXIT_MS      = 560;
 
 export default function ColourExperience() {
